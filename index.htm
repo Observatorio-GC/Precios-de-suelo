@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 /> 
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' />
+<title>ObservatorioTerritorialGC</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+<style type="text/css">
+<script type="text/javascript" src="http://www.ign.gob.ar/argenmap2/argenmap.jquery/argenmap.jquery.min.js"></script>	
+     <!-- .leaflet-control-attribution{display: none;} -->
+</style>
+<style>
+    h1 { color: #800080; }
+</style>	
+</head>
+<body>
+<h1>Valor del Suelo.Godoy Cruz 2020.<img src="favicon.png" height= "45px" width="45px" align=right></h1> 
+
+<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+<div id="map" class="map map-home" style="margin:4px 0 8px 0;height:800px;"></div> 
+<script type="text/javascript" src="scripts/Centrosdesalud.js"></script>
+<script type="text/javascript" src="scripts/godoycruz.js"></script>
+<script type="text/javascript" src="scripts/CicloviasProyectadas.js"></script>
+<script type="text/javascript" src="scripts/CicloviasExistentes.js"></script>
+<script type="text/javascript" src="scripts/ClinicasPrivadas.js"></script>
+<script type="text/javascript" src="scripts/Hospital.js"></script>
+<script type="text/javascript" src="scripts/Escuelas.js"></script>
+<script type="text/javascript" src="scripts/Farmacias.js"></script>
+<script type="text/javascript" src="scripts/ResidenciasAdultosMayores.js"></script>
+<script type="text/javascript" src="scripts/JardinesMunicipales.js"></script>
+<script type="text/javascript" src="scripts/Polideportivos.js"></script>
+<script type="text/javascript" src="scripts/Precios.js"></script>
+<script type="text/javascript" src="scripts/precio1500.js"></script>
+<script type="text/javascript" src="scripts/precio10222.js"></script>
+<script type="text/javascript" src="scripts/precio18944.js"></script>
+<script type="text/javascript" src="scripts/precio27667.js"></script>
+<script type="text/javascript" src="scripts/precio36389.js"></script>
+<script type="text/javascript" src="scripts/precio45111.js"></script>
+<script type="text/javascript" src="scripts/precio53833.js"></script>
+<script type="text/javascript" src="scripts/precio62556.js"></script>
+<script type="text/javascript" src="scripts/precio71278.js"></script>
+<script type="text/javascript" src="scripts/Seguridad.js"></script>
+<script src="scripts/leaflet-tilelayer-wmts.js"></script>
+<script>
+/*Argenmap*/
+var mapabase_argenmap = new L.TileLayer.WMTS( 'https://wms.ign.gob.ar/geoserver/capabaseargenmap/gwc/service/wmts?' ,
+                               {
+                                   layer: 'capabaseargenmap',
+                                   style: "normal",
+                                   tilematrixSet: "EPSG:3857",
+                                   format: "image/png",
+                                   attribution: " <a href='https://www.ign.gob.ar/AreaServicios/Argenmap/IntroduccionV2'> IGN - Argenmap v2 </a> | <a href='https://www.godoycruz.gob.ar/'>Secretaria de Ambiente y Desarrollo Sustentable - Godoy Cruz</a> | <a href='https://github.com/mylen/leaflet.TileLayer.WMTS'>GitHub</a>&copy "
+                               }
+                              );
+/* ICONOS */
+	var iconoComun = L.Icon.extend({
+		options: {
+			shadowUrl: 'img/marker-shadow.png',
+			iconSize:     [25, 41],
+			shadowSize:   [41, 41],
+			iconAnchor:   [12, 41],
+			popupAnchor:  [1, -34]
+		}
+	});
+
+	var iconoVerde = new iconoComun({iconUrl: 'img/marker-icon-2x-green.png'}),
+		iconoRojo = new iconoComun({iconUrl: 'img/marker-icon-2x-red.png'}),
+		iconoNegro = new iconoComun({iconUrl: 'img/marker-icon-2x-black.png'}),
+		iconoAzul = new iconoComun({iconUrl: 'img/marker-icon-2x-blue.png'}),
+		iconoDorado = new iconoComun({iconUrl: 'img/marker-icon-2x-gold.png'}),
+		iconoNaranja= new iconoComun({iconUrl: 'img/marker-icon-2x-orange.png'}),
+		iconoGris = new iconoComun({iconUrl: 'img/marker-icon-2x-grey.png'}),
+		iconoVioleta = new iconoComun({iconUrl: 'img/marker-icon-2x-violet.png'}),
+		iconoAmarillo = new iconoComun({iconUrl: 'img/marker-icon-2x-yellow.png'});
+
+	function crearIconoVerde (feature, latlng) {
+		return L.marker(latlng, { icon: iconoVerde })
+	}
+
+        var asignarIconoVerde = {
+	  pointToLayer: crearIconoVerde
+	}
+
+
+	function crearIconoRojo (feature, latlng) {
+		return L.marker(latlng, { icon: iconoRojo })
+	}
+
+	var asignarIconoRojo = {
+	  pointToLayer: crearIconoRojo
+	}
+
+        function crearIconoNegro (feature, latlng) {
+		return L.marker(latlng, { icon: iconoNegro })
+	}
+	var asignarIconoNegro = {
+	  pointToLayer: crearIconoNegro
+	}
+
+        function crearIconoAzul (feature, latlng) {
+		return L.marker(latlng, { icon: iconoAzul })
+	}
+	var asignarIconoAzul= {
+	  pointToLayer: crearIconoAzul
+	}
+
+        function crearIconoDorado (feature, latlng) {
+		return L.marker(latlng, { icon: iconoDorado })
+	}
+	var asignarIconoDorado = {
+	  pointToLayer: crearIconoDorado
+	}
+
+        function crearIconoNaranja (feature, latlng) {
+		return L.marker(latlng, { icon: iconoNaranja})
+	}
+	var asignarIconoNaranja = {
+	  pointToLayer: crearIconoNaranja
+	}
+
+        function crearIconoGris (feature, latlng) {
+		return L.marker(latlng, { icon: iconoGris  })
+	}
+	var asignarIconoGris  = {
+	  pointToLayer: crearIconoGris 
+	}
+
+        function crearIconoVioleta (feature, latlng) {
+		return L.marker(latlng, { icon: iconoVioleta })
+	}
+	var asignarIconoVioleta = {
+	  pointToLayer: crearIconoVioleta
+	}
+
+        function crearIconoAmarillo (feature, latlng) {
+		return L.marker(latlng, { icon: iconoAmarillo })
+	}
+	var asignarIconoAmarillo = {
+	  pointToLayer: crearIconoAmarillo
+	}
+		
+	
+        /* POPUPS */
+	function agregarPopup(feature, layer) { 
+		if (feature.properties && feature.properties.Nombre_1) { 
+				layer.bindPopup( "<strong>" + feature.properties.Nombre_1 + "</strong>"); 
+		} 
+	}
+         function agregarPopupfarmacias(feature, layer) { 
+		if (feature.properties && feature.properties.Nombre) { 
+				layer.bindPopup( "<strong>" + feature.properties.Nombre + "</strong>"); 
+		} 
+	}
+		function agregarPopupjardinesmuni(feature, layer) { 
+		if (feature.properties && feature.properties.nombre) { 
+				layer.bindPopup( "<strong>" + feature.properties.nombre + "</strong>"); 
+		} 
+	}
+		function agregarPopupciclovias(feature, layer) { 
+		if (feature.properties && feature.properties.Distancia) { 
+				layer.bindPopup( "<strong>" + feature.properties.Distancia + "</strong>"); 
+		} 
+	}
+	   
+	   function agregarPopupPrecios(feature, layer) { 
+			if (feature.properties && feature.properties.Precio) { 
+					layer.bindPopup( "<strong>" + feature.properties.Precio + "</strong>"); 
+			} 
+		}
+	
+/* BASE LAYERS */
+	var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+		osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+		mapabase_osm = L.tileLayer(osmUrl, {maxZoom: 20, attribution: osmAttrib});
+	var otUrl = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+		otAttrib = 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+		mapabase_ot = L.tileLayer(otUrl, {maxZoom: 20, attribution: otAttrib});
+	
+/* OVERLAYS Y GRUPOS */
+	var 
+    	godoycruz = L.geoJson(godoycruz),
+		precio1500 = L.geoJson(precio1500, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#2b83ba",fillOpacity: 0.75}),
+		precio10222 = L.geoJson(precio10222, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#6bb0af",fillOpacity: 0.75}),
+		precio18944 = L.geoJson(precio18944, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#abdda4",fillOpacity: 0.75}),
+		precio27667 = L.geoJson(precio27667, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#d5eeb2",fillOpacity: 0.75}),
+		precio36389 = L.geoJson(precio36389, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#ffffbf",fillOpacity: 0.75}),
+	    precio45111 = L.geoJson(precio45111, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#e69689",fillOpacity: 0.75}),
+	    precio53833 = L.geoJson(precio53833, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#fdae61",fillOpacity: 0.75}),
+	    precio62556 = L.geoJson(precio62556, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#ea633e",fillOpacity: 0.75}),
+	    precio71278 = L.geoJson(precio71278, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#d7191c",fillOpacity: 0.75}),
+	    cicloviasproy = L.geoJson(CicloviasProyectadas,{ onEachFeature: agregarPopupciclovias}).setStyle({color:"yellow"}),
+        cicloviasexist =L.geoJson(CicloviasExistentes,{ onEachFeature: agregarPopupciclovias}).setStyle({color:"red"})
+        clinicaspriv = L. geoJson(ClinicasPrivadas,{ pointToLayer: crearIconoNegro, onEachFeature: agregarPopupjardinesmuni }),
+         hospital = L.geoJson(Hospital, { pointToLayer: crearIconoRojo, onEachFeature: agregarPopup }),
+         escuelas = L.geoJson(Escuelas, { pointToLayer: crearIconoDorado, onEachFeature: agregarPopup }),
+          farmacias = L.geoJson(Farmacias, { pointToLayer: crearIconoGris, onEachFeature: agregarPopupfarmacias }),
+         polideportivos = L.geoJson(Polideportivos,  { pointToLayer: crearIconoAmarillo, onEachFeature: agregarPopup }),
+         jardinesmuni = L.geoJson(JardinesMunicipales,{ pointToLayer: crearIconoVioleta, onEachFeature: agregarPopupjardinesmuni }),
+         seguridad =L.geoJson(Seguridad,{ pointToLayer: crearIconoAzul, onEachFeature: agregarPopup }),
+	 residenciasad =L.geoJson(ResidenciasAdultosMayores,{ pointToLayer: crearIconoNaranja, onEachFeature: agregarPopup });
+	 
+/* CREACIÓN DEL MAPA CON BASE LAYERS Y OVERLAYS */
+	var map = L.map('map', {
+			layers: [mapabase_argenmap,godoycruz]
+		}).setView([-32.9314, -68.8497], 13);
+
+/* CREACIÓN DEL LAYERS CONTROL */
+	var baseMaps = {
+		"OpenTopoMap": mapabase_ot,
+		 "Argenmap": mapabase_argenmap,
+
+	};
+	
+	var overlayMaps = {        
+							  " De 1.500 a 10.222  ($/m2)":precio1500,
+							  " De 10.222 a 18.944 ($/m2)":precio10222,
+							  " De 18.944 a 27.667 ($/m2)":precio18944,
+							  " De 27.667 a 36.389 ($/m2)":precio27667,
+							  " De 36.389 a 45.111 ($/m2)":precio36389,
+							  " De 45.111 a 53.833 ($/m2)":precio45111,
+							  " De 53.833 a 62.556 ($/m2)":precio53833,
+							  " De 62.556 a 71.278 ($/m2)":precio62556,
+							  " De 71.278 a 80.000 ($/m2)":precio71278,
+                             
+	};
+L.control.layers(baseMaps, overlayMaps).addTo(map);
+L.control.scale().addTo(map);
+</script>
+  </body>
+</html>
+       
+
+      
