@@ -1,35 +1,51 @@
 ﻿<!DOCTYPE html>
-<html>
-<head>
-<meta charset=utf-8 /> 
-<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui' />
-<title>ObservatorioTerritorialGC</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
-<link rel="shortcut icon" type="image/x-icon" href="favicon.png">
-<style type="text/css">
-<script type="text/javascript" src="http://www.ign.gob.ar/argenmap2/argenmap.jquery/argenmap.jquery.min.js"></script>	
-     <!-- .leaflet-control-attribution{display: none;} -->
-</style>
-<style>
-    h1 { color: #800080; }
-</style>	
-</head>
-<body>
-<h1>Valor del Suelo. Godoy Cruz 2020.<img src="favicon.png" height= "45px" width="45px" align=right></h1> 
+<html  lang = "es">
 
-<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-<div id="map" class="map map-home" style="margin:4px 0 8px 0;height:800px;"></div> 
-<script type="text/javascript" src="scripts/Centrosdesalud.js"></script>
+<head>
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description"
+	content="Visor del Observatorio Territorial Godoy Cruz, el cual permite la visualización de información geográfica del municipio. Oficina de Planificación Urbana">
+<meta name="keywords"
+	content="Godoy Cruz, Planificación Urbana, Secretaria de Ambiente y Desarrollo Sustentable, Visor, Observatorio Territorial">
+<meta name="author" content="Ignacio Diaz - Fernando Cruceño">
+<meta name="copyright" content="Observatorio Territorial Godoy Cruz">
+<title>Observatorio Territorial de Godoy Cruz</title>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+
+<!-- CSS -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css">
+<link rel="stylesheet" href="css/Leaflet.PolylineMeasure.css">
+<link rel="stylesheet" href="css/Leaflet.StreetViewButtons.css">
+<link rel="stylesheet" href="css/Leaflet.StreetView1Buttons.css">
+<link rel="stylesheet" href="css/leaflet.groupedlayercontrol.min.css">
+<link rel="stylesheet" href="css/Control.Coordinates.css">
+<link rel="stylesheet" href="css/L.Control.MousePosition.css">
+
+<!-- SCRIPTS -->
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+<script src="https://unpkg.com/togeojson@0.16.0"></script>
+<script src="scripts/Leaflet.PolylineMeasure.js"></script>
+<script src="scripts/StreetViewButtons.js"></script>
+<script src="scripts/StreetView1Buttons.js"></script>
+<script src="scripts/leaflet.pattern.js"></script>
+<script src="scripts/leaflet-tilelayer-wmts.js"></script>
+<script src="scripts/leaflet.groupedlayercontrol.min.js"></script>
+<script src="scripts/leaflet.browser.print.js"></script>
+<script src="scripts/leaflet.filelayer.js"></script>
+<script src="scripts/Control.Coordinates.js"></script>
+<script src="scripts/L.Control.MousePosition.js"></script>
+<script src="scripts/jquery-3.7.0.js"></script>
+<script src="scripts/jquery-3.7.0.min.map"></script>
+<script src="js/popups.js"></script>
+<script src="js/iconos.js"></script>
+
+<!-- GEOJSON -->
+
 <script type="text/javascript" src="scripts/godoycruz.js"></script>
-<script type="text/javascript" src="scripts/CicloviasProyectadas.js"></script>
-<script type="text/javascript" src="scripts/CicloviasExistentes.js"></script>
-<script type="text/javascript" src="scripts/ClinicasPrivadas.js"></script>
-<script type="text/javascript" src="scripts/Hospital.js"></script>
-<script type="text/javascript" src="scripts/Escuelas.js"></script>
-<script type="text/javascript" src="scripts/Farmacias.js"></script>
-<script type="text/javascript" src="scripts/ResidenciasAdultosMayores.js"></script>
-<script type="text/javascript" src="scripts/JardinesMunicipales.js"></script>
-<script type="text/javascript" src="scripts/Polideportivos.js"></script>
 <script type="text/javascript" src="scripts/Precios.js"></script>
 <script type="text/javascript" src="scripts/precio1500.js"></script>
 <script type="text/javascript" src="scripts/precio10222.js"></script>
@@ -40,195 +56,150 @@
 <script type="text/javascript" src="scripts/precio53833.js"></script>
 <script type="text/javascript" src="scripts/precio62556.js"></script>
 <script type="text/javascript" src="scripts/precio71278.js"></script>
-<script type="text/javascript" src="scripts/Seguridad.js"></script>
-<script src="scripts/leaflet-tilelayer-wmts.js"></script>
-<script>
-/*Argenmap*/
-var mapabase_argenmap = new L.TileLayer.WMTS( 'https://wms.ign.gob.ar/geoserver/capabaseargenmap/gwc/service/wmts?' ,
-                               {
-                                   layer: 'capabaseargenmap',
-                                   style: "normal",
-                                   tilematrixSet: "EPSG:3857",
-                                   format: "image/png",
-                                   attribution: " <a href='https://www.ign.gob.ar/AreaServicios/Argenmap/IntroduccionV2'> IGN - Argenmap v2 </a> | <a href='https://www.godoycruz.gob.ar/'>Secretaria de Ambiente y Desarrollo Sustentable - Godoy Cruz</a> | <a href='https://github.com/mylen/leaflet.TileLayer.WMTS'>GitHub</a>&copy "
-                               }
-                              );
-/* ICONOS */
-	var iconoComun = L.Icon.extend({
-		options: {
-			shadowUrl: 'img/marker-shadow.png',
-			iconSize:     [25, 41],
-			shadowSize:   [41, 41],
-			iconAnchor:   [12, 41],
-			popupAnchor:  [1, -34]
+<script type="text/javascript" src="scripts/DistritosDepartamentales.js"></script>
+
+</head>
+
+<header>
+
+	<style>
+		.leaflet-container {
+			display: flex;
+			font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			font-size: 11px;
 		}
-	});
 
-	var iconoVerde = new iconoComun({iconUrl: 'img/marker-icon-2x-green.png'}),
-		iconoRojo = new iconoComun({iconUrl: 'img/marker-icon-2x-red.png'}),
-		iconoNegro = new iconoComun({iconUrl: 'img/marker-icon-2x-black.png'}),
-		iconoAzul = new iconoComun({iconUrl: 'img/marker-icon-2x-blue.png'}),
-		iconoDorado = new iconoComun({iconUrl: 'img/marker-icon-2x-gold.png'}),
-		iconoNaranja= new iconoComun({iconUrl: 'img/marker-icon-2x-orange.png'}),
-		iconoGris = new iconoComun({iconUrl: 'img/marker-icon-2x-grey.png'}),
-		iconoVioleta = new iconoComun({iconUrl: 'img/marker-icon-2x-violet.png'}),
-		iconoAmarillo = new iconoComun({iconUrl: 'img/marker-icon-2x-yellow.png'});
-
-	function crearIconoVerde (feature, latlng) {
-		return L.marker(latlng, { icon: iconoVerde })
-	}
-
-        var asignarIconoVerde = {
-	  pointToLayer: crearIconoVerde
-	}
-
-
-	function crearIconoRojo (feature, latlng) {
-		return L.marker(latlng, { icon: iconoRojo })
-	}
-
-	var asignarIconoRojo = {
-	  pointToLayer: crearIconoRojo
-	}
-
-        function crearIconoNegro (feature, latlng) {
-		return L.marker(latlng, { icon: iconoNegro })
-	}
-	var asignarIconoNegro = {
-	  pointToLayer: crearIconoNegro
-	}
-
-        function crearIconoAzul (feature, latlng) {
-		return L.marker(latlng, { icon: iconoAzul })
-	}
-	var asignarIconoAzul= {
-	  pointToLayer: crearIconoAzul
-	}
-
-        function crearIconoDorado (feature, latlng) {
-		return L.marker(latlng, { icon: iconoDorado })
-	}
-	var asignarIconoDorado = {
-	  pointToLayer: crearIconoDorado
-	}
-
-        function crearIconoNaranja (feature, latlng) {
-		return L.marker(latlng, { icon: iconoNaranja})
-	}
-	var asignarIconoNaranja = {
-	  pointToLayer: crearIconoNaranja
-	}
-
-        function crearIconoGris (feature, latlng) {
-		return L.marker(latlng, { icon: iconoGris  })
-	}
-	var asignarIconoGris  = {
-	  pointToLayer: crearIconoGris 
-	}
-
-        function crearIconoVioleta (feature, latlng) {
-		return L.marker(latlng, { icon: iconoVioleta })
-	}
-	var asignarIconoVioleta = {
-	  pointToLayer: crearIconoVioleta
-	}
-
-        function crearIconoAmarillo (feature, latlng) {
-		return L.marker(latlng, { icon: iconoAmarillo })
-	}
-	var asignarIconoAmarillo = {
-	  pointToLayer: crearIconoAmarillo
-	}
-		
-	
-        /* POPUPS */
-	function agregarPopup(feature, layer) { 
-		if (feature.properties && feature.properties.Nombre_1) { 
-				layer.bindPopup( "<strong>" + feature.properties.Nombre_1 + "</strong>"); 
-		} 
-	}
-         function agregarPopupfarmacias(feature, layer) { 
-		if (feature.properties && feature.properties.Nombre) { 
-				layer.bindPopup( "<strong>" + feature.properties.Nombre + "</strong>"); 
-		} 
-	}
-		function agregarPopupjardinesmuni(feature, layer) { 
-		if (feature.properties && feature.properties.nombre) { 
-				layer.bindPopup( "<strong>" + feature.properties.nombre + "</strong>"); 
-		} 
-	}
-		function agregarPopupciclovias(feature, layer) { 
-		if (feature.properties && feature.properties.Distancia) { 
-				layer.bindPopup( "<strong>" + feature.properties.Distancia + "</strong>"); 
-		} 
-	}
-	   
-	   function agregarPopupPrecios(feature, layer) { 
-			if (feature.properties && feature.properties.Precio) { 
-					layer.bindPopup( "<strong>" + feature.properties.Precio + "</strong>"); 
-			} 
+		.leaflet-control-attribution.leaflet-control {
+			font-family: 'Playfair Display', serif;
+			font-size: 12px;
 		}
-	
-/* BASE LAYERS */
-	var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-		osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-		mapabase_osm = L.tileLayer(osmUrl, {maxZoom: 20, attribution: osmAttrib});
-	var otUrl = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-		otAttrib = 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
-		mapabase_ot = L.tileLayer(otUrl, {maxZoom: 20, attribution: otAttrib});
+
+		.leaflet-control-attribution.leaflet-control a:hover {
+			color: #800080;
+		}
+	</style>
+
+	<h1>Valor del Suelo 2023 - Godoy Cruz</h1>
+	<img src="img/favicon.png" class="logogc">
+	<div id="map"></div>
+
+</header>
+
+<body>
+	<!-- FUNCIONES LEAFLET -->
+	<script>
+		/* ARGENMAP */
+		var mapabase_argenmap = new L.TileLayer.WMTS('https://wms.ign.gob.ar/geoserver/capabaseargenmap/gwc/service/wmts?', {
+			layer: 'capabaseargenmap',
+			style: "normal",
+			tilematrixSet: "EPSG:3857",
+			format: "image/png",
+			attribution: " <a href='https://www.ign.gob.ar/AreaServicios/Argenmap/IntroduccionV2'> IGN - Argenmap v2 </a> | <a href='https://www.godoycruz.gob.ar/'>Secretaria de Ambiente y Desarrollo Sustentable - Godoy Cruz</a> | <a href='https://github.com/mylen/leaflet.TileLayer.WMTS'>GitHub</a>&copy "
+		});
+
+
+		/* BASE LAYERS */
+		var esriUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+			esriAttrib = "Powered by <a href='https://www.esri.com/en-us/home'> &copyESRI </a> | <a href='https://www.godoycruz.gob.ar/'>Secretaría de Ambiente y Desarrollo Sustentable - Godoy Cruz</a>",
+			mapabase_esri = L.tileLayer(esriUrl, {
+				maxZoom: 20,
+				attribution: esriAttrib
+			});
+
+		var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+			osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+			mapabase_osm = L.tileLayer(osmUrl, {
+				maxZoom: 20,
+				attribution: osmAttrib
+			});
+
+		var otUrl = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+			otAttrib =
+			'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+			mapabase_ot = L.tileLayer(otUrl, {
+				maxZoom: 20,
+				attribution: otAttrib
+			});
+
+		var googleSatelite = 'http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}',
+		    googleSateliteAttrib =
+			"Powered by &copyGoogle" ,
+			mapabase_googleSatelite = L.tileLayer(googleSatelite, {
+				maxZoom: 20,
+				attribution: googleSateliteAttrib
+			});
+
 	
 /* OVERLAYS Y GRUPOS */
-	var 
-    	godoycruz = L.geoJson(godoycruz),
-		precio1500 = L.geoJson(precio1500, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#2b83ba",fillOpacity: 0.75}),
-		precio10222 = L.geoJson(precio10222, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#6bb0af",fillOpacity: 0.75}),
-		precio18944 = L.geoJson(precio18944, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#abdda4",fillOpacity: 0.75}),
-		precio27667 = L.geoJson(precio27667, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#d5eeb2",fillOpacity: 0.75}),
-		precio36389 = L.geoJson(precio36389, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#ffffbf",fillOpacity: 0.75}),
-	    precio45111 = L.geoJson(precio45111, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#e69689",fillOpacity: 0.75}),
-	    precio53833 = L.geoJson(precio53833, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#fdae61",fillOpacity: 0.75}),
-	    precio62556 = L.geoJson(precio62556, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#ea633e",fillOpacity: 0.75}),
-	    precio71278 = L.geoJson(precio71278, { onEachFeature: agregarPopupPrecios}).setStyle({color:"#d7191c",fillOpacity: 0.75}),
-	    cicloviasproy = L.geoJson(CicloviasProyectadas,{ onEachFeature: agregarPopupciclovias}).setStyle({color:"yellow"}),
-        cicloviasexist =L.geoJson(CicloviasExistentes,{ onEachFeature: agregarPopupciclovias}).setStyle({color:"red"})
-        clinicaspriv = L. geoJson(ClinicasPrivadas,{ pointToLayer: crearIconoNegro, onEachFeature: agregarPopupjardinesmuni }),
-         hospital = L.geoJson(Hospital, { pointToLayer: crearIconoRojo, onEachFeature: agregarPopup }),
-         escuelas = L.geoJson(Escuelas, { pointToLayer: crearIconoDorado, onEachFeature: agregarPopup }),
-          farmacias = L.geoJson(Farmacias, { pointToLayer: crearIconoGris, onEachFeature: agregarPopupfarmacias }),
-         polideportivos = L.geoJson(Polideportivos,  { pointToLayer: crearIconoAmarillo, onEachFeature: agregarPopup }),
-         jardinesmuni = L.geoJson(JardinesMunicipales,{ pointToLayer: crearIconoVioleta, onEachFeature: agregarPopupjardinesmuni }),
-         seguridad =L.geoJson(Seguridad,{ pointToLayer: crearIconoAzul, onEachFeature: agregarPopup }),
-	 residenciasad =L.geoJson(ResidenciasAdultosMayores,{ pointToLayer: crearIconoNaranja, onEachFeature: agregarPopup });
+	var plazagc = L.marker([-32.92524, -68.84439]).bindPopup('Plaza GC.').openPopup(),
+		godoycruz = L.geoJson(godoycruz),
+		Depa = L.geoJson(DistritosDepartamentales, {onEachFeature: agregarPopupDistritosDepartamentales}),
+		precio1500 = L.geoJson(precio1500, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#2b83ba", fillOpacity: 0.75 }),
+		precio10222 = L.geoJson(precio10222, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#6bb0af", fillOpacity: 0.75 }),
+		precio18944 = L.geoJson(precio18944, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#abdda4", fillOpacity: 0.75 }),
+		precio27667 = L.geoJson(precio27667, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#d5eeb2", fillOpacity: 0.75 }),
+		precio36389 = L.geoJson(precio36389, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#ffffbf", fillOpacity: 0.75 }),
+		precio45111 = L.geoJson(precio45111, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#e69689", fillOpacity: 0.75 }),
+		precio53833 = L.geoJson(precio53833, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#fdae61", fillOpacity: 0.75 }),
+		precio62556 = L.geoJson(precio62556, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#ea633e", fillOpacity: 0.75 }),
+		precio71278 = L.geoJson(precio71278, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#d7191c", fillOpacity: 0.75 });
+		
 	 
 /* CREACIÓN DEL MAPA CON BASE LAYERS Y OVERLAYS */
-	var map = L.map('map', {
-			layers: [mapabase_argenmap,godoycruz]
-		}).setView([-32.9314, -68.8497], 13);
+var map = L.map('map', { dragging: !L.Browser.mobile, tap: !L.Browser.mobile,
+			layers: [mapabase_esri, godoycruz]
+		}).setView([-32.9337, -68.8978], 13);
+	/* 	var marker = L.marker(map.getCenter(), {
+				icon: iconoSTV
+			}).bindPopup(
+				'Mover éste marcador y clickear el boton "Enlace externo de Street View", ubicado a la izquierda del mapa')
+			.addTo(map);
+		map.on('move', function () {
+			marker.setLatLng(map.getCenter());
+		});
+ */
+/* FUNCIONES DE ESTILO DE OVERLAYS */
+    estiloDistritosDepartamentales();		
+		
 
 /* CREACIÓN DEL LAYERS CONTROL */
 	var baseMaps = {
-		"OpenTopoMap": mapabase_ot,
-		 "Argenmap": mapabase_argenmap,
+		"OpenStreetMap": mapabase_osm,
+		"Argenmap": mapabase_argenmap,
+		"Google Satelital": mapabase_googleSatelite,
+		"ESRI Satelital": mapabase_esri,
+	};
 
+	var groupedOverlays = {
+		/* "Street View": {
+				"Marcador": marker,
+			}, */
+
+		"Distritos Departamentales":{
+			"Distritos": Depa,
+		},
+		"Valor del Suelo": {
+			" De 16.305 - 111.113 ($/m2)": precio1500,
+			" De 111.113 - 205.921 ($/m2)": precio10222,
+			" De 205.921 - 300.740 ($/m2)": precio18944,
+			" De 300.740 - 395.548 ($/m2)": precio27667,
+			" De 395.548 - 490.356 ($/m2)": precio36389,
+			" De 490.356 - 585.164 ($/m2)": precio45111,
+			" De 585.164 - 679.983 ($/m2)": precio53833,
+			" De 679.983 - 774.791 ($/m2)": precio62556,
+			" De 774.791 - 869.600 ($/m2)": precio71278,
+		},
 	};
-	
-	var overlayMaps = {        
-							  " De 1.500 a 10.222  ($/m2)":precio1500,
-							  " De 10.222 a 18.944 ($/m2)":precio10222,
-							  " De 18.944 a 27.667 ($/m2)":precio18944,
-							  " De 27.667 a 36.389 ($/m2)":precio27667,
-							  " De 36.389 a 45.111 ($/m2)":precio36389,
-							  " De 45.111 a 53.833 ($/m2)":precio45111,
-							  " De 53.833 a 62.556 ($/m2)":precio53833,
-							  " De 62.556 a 71.278 ($/m2)":precio62556,
-							  " De 71.278 a 80.000 ($/m2)":precio71278,
-                             
+	var opciones_groupedlayers = {
+		groupCheckboxes: false
 	};
-L.control.layers(baseMaps, overlayMaps).addTo(map);
-L.control.scale().addTo(map);
+
+	L.control.mousePosition().addTo(map);
 </script>
-  </body>
+	
+	<script src="js/funcionesMapa.js"></script>
+</body>
+	
 </html>
-       
 
       
