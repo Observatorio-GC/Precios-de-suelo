@@ -1,8 +1,8 @@
  /* POPUPS */
 
    function agregarPopupPrecios(feature, layer) { 
-        if (feature.properties && feature.properties.Precio) { 
-                layer.bindPopup( "<strong>" + feature.properties.Precio + "</strong>"); 
+        if (feature.properties && feature.properties.PrecioUSD) { 
+                layer.bindPopup( "<strong>" + feature.properties.PrecioUSD + "</strong>"); 
         } 
     }
 
