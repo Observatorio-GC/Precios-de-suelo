@@ -15,9 +15,19 @@
 
 <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
 
+   <!-- Load Leaflet from CDN-->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+   <!-- Load Esri Leaflet from CDN -->
+   <script src="https://unpkg.com/esri-leaflet"></script>
+
+   <!-- Esri Leaflet Geocoder -->
+   <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css"/>
+   <script src="https://unpkg.com/esri-leaflet-geocoder"></script>
+
 <!-- CSS -->
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css">
 <link rel="stylesheet" href="css/Leaflet.PolylineMeasure.css">
 <link rel="stylesheet" href="css/Leaflet.StreetViewButtons.css">
 <link rel="stylesheet" href="css/Leaflet.StreetView1Buttons.css">
@@ -26,7 +36,6 @@
 <link rel="stylesheet" href="css/L.Control.MousePosition.css">
 
 <!-- SCRIPTS -->
-<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 <script src="https://unpkg.com/togeojson@0.16.0"></script>
 <script src="scripts/Leaflet.PolylineMeasure.js"></script>
 <script src="scripts/StreetViewButtons.js"></script>
@@ -44,7 +53,6 @@
 <script src="js/iconos.js"></script>
 
 <!-- GEOJSON -->
-
 <script type="text/javascript" src="scripts/godoycruz.js"></script>
 <script type="text/javascript" src="scripts/Precios.js"></script>
 <script type="text/javascript" src="scripts/precio1500.js"></script>
@@ -59,9 +67,7 @@
 <script type="text/javascript" src="scripts/DistritosDepartamentales.js"></script>
 
 </head>
-
 <header>
-
 	<style>
 		.leaflet-container {
 			display: flex;
@@ -79,7 +85,7 @@
 		}
 	</style>
 
-	<h1>Valor del Suelo 2023 - Godoy Cruz</h1>
+	<h1>Valor del Suelo 2024 - Godoy Cruz</h1>
 	<img src="img/favicon.png" class="logogc">
 	<div id="map"></div>
 
@@ -89,17 +95,17 @@
 	<!-- FUNCIONES LEAFLET -->
 	<script>
 		/* ARGENMAP */
-		var mapabase_argenmap = new L.TileLayer.WMTS('https://wms.ign.gob.ar/geoserver/capabaseargenmap/gwc/service/wmts?', {
+		 var mapabase_argenmap = new L.TileLayer.WMTS('https://wms.ign.gob.ar/geoserver/capabaseargenmap/gwc/service/wmts?', {
 			layer: 'capabaseargenmap',
 			style: "normal",
 			tilematrixSet: "EPSG:3857",
 			format: "image/png",
 			attribution: " <a href='https://www.ign.gob.ar/AreaServicios/Argenmap/IntroduccionV2'> IGN - Argenmap v2 </a> | <a href='https://www.godoycruz.gob.ar/'>Secretaria de Ambiente y Desarrollo Sustentable - Godoy Cruz</a> | <a href='https://github.com/mylen/leaflet.TileLayer.WMTS'>GitHub</a>&copy "
-		});
+		}); 
 
 
 		/* BASE LAYERS */
-		var esriUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+		 var esriUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
 			esriAttrib = "Powered by <a href='https://www.esri.com/en-us/home'> &copyESRI </a> | <a href='https://www.godoycruz.gob.ar/'>Secretaría de Ambiente y Desarrollo Sustentable - Godoy Cruz</a>",
 			mapabase_esri = L.tileLayer(esriUrl, {
 				maxZoom: 20,
@@ -127,11 +133,11 @@
 			mapabase_googleSatelite = L.tileLayer(googleSatelite, {
 				maxZoom: 20,
 				attribution: googleSateliteAttrib
-			});
+			}); 
 
 	
 /* OVERLAYS Y GRUPOS */
-	var plazagc = L.marker([-32.92524, -68.84439]).bindPopup('Plaza GC.').openPopup(),
+ 	var plazagc = L.marker([-32.92524, -68.84439]).bindPopup('Plaza GC.').openPopup(),
 		godoycruz = L.geoJson(godoycruz),
 		Depa = L.geoJson(DistritosDepartamentales, {onEachFeature: agregarPopupDistritosDepartamentales}),
 		precio1500 = L.geoJson(precio1500, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#2b83ba", fillOpacity: 0.75 }),
@@ -146,20 +152,13 @@
 		
 	 
 /* CREACIÓN DEL MAPA CON BASE LAYERS Y OVERLAYS */
-var map = L.map('map', { dragging: !L.Browser.mobile, tap: !L.Browser.mobile,
+      var map = L.map("map", { dragging: !L.Browser.mobile, tap: !L.Browser.mobile,
 			layers: [mapabase_esri, godoycruz]
-		}).setView([-32.9337, -68.8978], 13);
-	/* 	var marker = L.marker(map.getCenter(), {
-				icon: iconoSTV
-			}).bindPopup(
-				'Mover éste marcador y clickear el boton "Enlace externo de Street View", ubicado a la izquierda del mapa')
-			.addTo(map);
-		map.on('move', function () {
-			marker.setLatLng(map.getCenter());
-		});
- */
+		}).setView([-32.9337,-68.8978 ], 13);
+
+    
 /* FUNCIONES DE ESTILO DE OVERLAYS */
-    estiloDistritosDepartamentales();		
+    estiloDistritosDepartamentales(); 	
 		
 
 /* CREACIÓN DEL LAYERS CONTROL */
@@ -167,10 +166,10 @@ var map = L.map('map', { dragging: !L.Browser.mobile, tap: !L.Browser.mobile,
 		"OpenStreetMap": mapabase_osm,
 		"Argenmap": mapabase_argenmap,
 		"Google Satelital": mapabase_googleSatelite,
-		"ESRI Satelital": mapabase_esri,
-	};
+		"ESRI Satelital": mapabase_esri, 
+	}; 
 
-	var groupedOverlays = {
+ var groupedOverlays = {
 		/* "Street View": {
 				"Marcador": marker,
 			}, */
@@ -178,16 +177,17 @@ var map = L.map('map', { dragging: !L.Browser.mobile, tap: !L.Browser.mobile,
 		"Distritos Departamentales":{
 			"Distritos": Depa,
 		},
+
 		"Valor del Suelo": {
-			" De 16.305 - 111.113 ($/m2)": precio1500,
-			" De 111.113 - 205.921 ($/m2)": precio10222,
-			" De 205.921 - 300.740 ($/m2)": precio18944,
-			" De 300.740 - 395.548 ($/m2)": precio27667,
-			" De 395.548 - 490.356 ($/m2)": precio36389,
-			" De 490.356 - 585.164 ($/m2)": precio45111,
-			" De 585.164 - 679.983 ($/m2)": precio53833,
-			" De 679.983 - 774.791 ($/m2)": precio62556,
-			" De 774.791 - 869.600 ($/m2)": precio71278,
+			" De 17 - 117 (usd/m2)": precio1500,
+			" De 118 - 211 (usd/m2)": precio10222,
+			" De 212 - 316 (usd/m2)": precio18944,
+			" De 317 - 421 (usd/m2)": precio27667,
+			" De 422 - 468 (usd/m2)": precio36389,
+			" De 469 - 574 (usd/m2)": precio45111,
+			" De 575 - 673 (usd/m2)": precio53833,
+			" De 674 - 819 (usd/m2)": precio62556,
+			" De 820 - 936 (usd/m2)": precio71278,
 		},
 	};
 	var opciones_groupedlayers = {
@@ -197,7 +197,7 @@ var map = L.map('map', { dragging: !L.Browser.mobile, tap: !L.Browser.mobile,
 	L.control.mousePosition().addTo(map);
 </script>
 	
-	<script src="js/funcionesMapa.js"></script>
+ 	<script src="js/funcionesMapa.js"></script> 
 </body>
 	
 </html>
