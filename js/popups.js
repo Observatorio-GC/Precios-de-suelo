@@ -12,6 +12,30 @@
         }
     }
 
+    function agregarPopupespaciosverdes(feature, layer) {
+        if (feature.properties && feature.properties.NOMBRE) {
+            layer.bindPopup("<strong>" + feature.properties.Descriptio + "</strong><br/>" + feature.properties.NOMBRE);
+        }
+    }
+
+    function agregarPopupbarrios(feature, layer) {
+        if (feature.properties && feature.properties.Nombre_1) {
+            layer.bindPopup("<strong>" + feature.properties.Nombre_1 + "</strong><br/>" + feature.properties.Descrip + "</strong><br/>");
+        }
+    }
+
+    function agregarPopupBarriosConsolidados(feature, layer) {
+        if (feature.properties && feature.properties.Nombre_1) {
+            layer.bindPopup("<strong>" + feature.properties.Nombre_1 + "</strong>");
+        }
+    }
+
+    function agregarPopupciclovias(feature, layer) {
+        if (feature.properties && feature.properties.Distancia) {
+            layer.bindPopup("<strong>" + feature.properties.TIPO_2 + "</strong><br/>" + feature.properties.Distancia);
+        }
+    }
+
 /* ESTILOS */
 
 function estiloDistritosDepartamentales() {
