@@ -13,7 +13,7 @@
 <title>Observatorio Territorial de Godoy Cruz</title>
 
 
-<link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+<link rel="shortcut icon" type="image/x-icon" href="./img/favicon1.png">
 
    <!-- Load Leaflet from CDN-->
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -65,6 +65,11 @@
 <script type="text/javascript" src="scripts/precio62556.js"></script>
 <script type="text/javascript" src="scripts/precio71278.js"></script>
 <script type="text/javascript" src="scripts/DistritosDepartamentales.js"></script>
+<script type="text/javascript" src="scripts/EspaciosVerdes.js"></script>
+<script type="text/javascript" src="scripts/BarriosConsolidados.js"></script>
+<script type="text/javascript" src="scripts/BarriosPopulares.js"></script>
+<script type="text/javascript" src="scripts/CicloviasExistentes.js"></script>
+
 
 </head>
 <header>
@@ -86,7 +91,7 @@
 	</style>
 
 	<h1>Valor del Suelo 2024 - Godoy Cruz</h1>
-	<img src="img/favicon.png" class="logogc">
+	<!-- <img src="img/favicon.png" class="logogc"> -->
 	<div id="map"></div>
 
 </header>
@@ -106,7 +111,7 @@
 
 		/* BASE LAYERS */
 		 var esriUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-			esriAttrib = "Powered by <a href='https://www.esri.com/en-us/home'> &copyESRI </a> | <a href='https://www.godoycruz.gob.ar/'>Secretaría de Ambiente y Desarrollo Sustentable - Godoy Cruz</a>",
+			esriAttrib = "Powered by <a href='https://www.esri.com/en-us/home'> &copyESRI </a> | <a href='https://www.godoycruz.gob.ar/'>Secretaría de Ambiente, Obras y Servicios Públicos - Godoy Cruz</a>",
 			mapabase_esri = L.tileLayer(esriUrl, {
 				maxZoom: 20,
 				attribution: esriAttrib
@@ -140,6 +145,26 @@
  	var plazagc = L.marker([-32.92524, -68.84439]).bindPopup('Plaza GC.').openPopup(),
 		godoycruz = L.geoJson(godoycruz),
 		Depa = L.geoJson(DistritosDepartamentales, {onEachFeature: agregarPopupDistritosDepartamentales}),
+		espverdes = L.geoJson(EspaciosVerdes, {
+				onEachFeature: agregarPopupespaciosverdes
+			}).setStyle({
+				color: "#4daf4a",
+				fillOpacity: 0.75
+			}),
+		barriospopulares = L.geoJson(BarriosPopulares, {
+				onEachFeature: agregarPopupbarrios
+			}).setStyle({
+				color: "#f2d119",
+				fillOpacity: 0.75
+			}),
+		BarriosConsolidados = L.geoJson(BarriosConsolidados, {
+				onEachFeature: agregarPopupBarriosConsolidados
+			}),	
+		cicloviasexist = L.geoJson(CicloviasExistentes, {
+				onEachFeature: agregarPopupciclovias
+			}).setStyle({
+				color: "red"
+			}),	
 		precio1500 = L.geoJson(precio1500, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#2b83ba", fillOpacity: 0.75 }),
 		precio10222 = L.geoJson(precio10222, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#6bb0af", fillOpacity: 0.75 }),
 		precio18944 = L.geoJson(precio18944, { onEachFeature: agregarPopupPrecios }).setStyle({ color: "#abdda4", fillOpacity: 0.75 }),
@@ -174,8 +199,12 @@
 				"Marcador": marker,
 			}, */
 
-		"Distritos Departamentales":{
+		"Capas Generales":{
+			"Barrios Consolidados": BarriosConsolidados,
+			"Barrios Populares": barriospopulares,
+			"Ciclovías Existentes": cicloviasexist,
 			"Distritos": Depa,
+			"Espacio Verdes": espverdes,
 		},
 
 		"Valor del Suelo": {
